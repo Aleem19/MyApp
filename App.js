@@ -93,6 +93,7 @@ function App() {
                 </Animated.View>
               </View>
 
+
               {/* 2. Middle Top Image  */}
               <View style={{
                 flex: 0.6,
