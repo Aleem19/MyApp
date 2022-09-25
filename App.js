@@ -1,6 +1,3 @@
-/* eslint-disable eslint-comments/no-unused-disable */
-/* eslint-disable react/self-closing-comp */
-/* eslint-disable no-trailing-spaces */
 /* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
@@ -17,6 +14,7 @@ import {
   View,
   Animated,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 
 import {
@@ -26,7 +24,7 @@ import {
   navBarFav,
 } from './assests/icons/index';
 
-import { starBig, starMedium, starSmall, topCoffee, topFries, add, tray, plateCoffee } from './assests/images/index';
+import { starBig, starMedium, starSmall, topBurger, topCoffee, topFries, add, tray, plateCoffee } from './assests/images/index';
 function App() {
   const navBarArray = [{ img: 'navBarFav', style: styles.nav1 }];
   // const mediumStarTranslation = useRef(new Animated.Value(0)).current;
@@ -37,7 +35,9 @@ function App() {
   const opacityTranslation = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
 
   const opacity = useRef(new Animated.Value(0)).current;
+  const scrollX = useRef(new Animated.Value(0)).current;
 
+  let currentIndex = 0;
   function onAddItem() {
     Animated.parallel([
       Animated.timing(opacity, {
@@ -53,7 +53,7 @@ function App() {
         useNativeDriver: true,
       }),
       Animated.timing(opacityTranslation.y, {
-        toValue: 140,
+        toValue: 115,
         delay: 200,
         duration: 1000,
         useNativeDriver: true,
@@ -61,10 +61,154 @@ function App() {
     ]).start();
   };
 
+  function zeroToOne() {
+    Animated.parallel([
+      Animated.timing(mediumStarTranslation.x, {
+        toValue: 140,
+        delay: 200,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(mediumStarTranslation.y, {
+        toValue: -90,
+        delay: 200,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(bigStarTranslation.x, {
+        toValue: -28,
+        delay: 200,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(bigStarTranslation.y, {
+        toValue: 100,
+        delay: 200,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(smallStarTranslation.x, {
+        toValue: -170,
+        delay: 200,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(smallStarTranslation.y, {
+        toValue: 47,
+        delay: 200,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }
+
+  function onetoZero() {
+    Animated.timing(mediumStarTranslation, {
+      toValue: 0,
+      delay: 200,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(bigStarTranslation, {
+      toValue: 0,
+      delay: 200,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(smallStarTranslation, {
+      toValue: 0,
+      delay: 200,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }
+  const onViewableItemsChanged = ({ viewableItems, changed }) => {
+    changed.map((items) => {
+      if (items.isViewable === true) {
+        currentIndex = items.index;
+        console.log("isViewable index", items.index);
+      }
+    });
+  };
+
+  const data = [{ name: "1", key: 1, imageName: topFries }, { name: "2", key: 2, imageName: topCoffee }, { name: "3", key: 4, imageName: topBurger }];
   return (
     <Fragment>
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.container}>
+
+          <Animated.FlatList
+            data={data}
+            style={{
+              height: 286, top: 75,
+              // borderWidth: 1,
+              // borderColor: "blue",
+            }}
+            horizontal
+            pagingEnabled
+            bounces={false}
+            viewabilityConfig={{
+              itemVisiblePercentThreshold: 50,
+            }}
+            onViewableItemsChanged={onViewableItemsChanged}
+            onScroll={() => {
+              if (currentIndex === 1) {
+                zeroToOne();
+              } else if (currentIndex === 0) {
+                onetoZero();
+              }
+
+            }}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={item => item.key}
+            renderItem={({ item, index }) => {
+              console.log("heloooo", index);
+              return <View style={{
+                width: Dimensions.get('screen').width,
+                height: 285,
+                // backgroundColor: (index === 0) ? "pink" : (index === 1) ? "blue" : "green",
+                // borderWidth: 1,
+                // borderColor: "green",
+              }}>
+                {/* OVERALL: Scroll view main view */}
+                <View style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                }}>
+                  {/* A. Left side view */}
+                  <View style={{
+                    flex: 0.55,
+                    flexDirection: 'row',
+                  }}>
+                    {/* 2. Middle Top Image  */}
+                    <View style={{
+                      flex: 1,
+                      marginLeft: 0,
+                      marginTop: 0,
+                      // borderWidth: 1,
+                      // borderColor: 'black',
+                    }}>
+                      <Image style={styles.topMainImage} source={item.imageName} />
+                    </View>
+                  </View>
+
+                  {/* B. Right side view */}
+                  <View style={styles.secondContainer}>
+                    <View style={styles.secondAContainer}>
+                      <Text style={styles.foodTypeText}>FRIES</Text>
+                      <Text style={styles.priceText}>4$</Text>
+                      <TouchableOpacity onPress={() => { onAddItem(); }}
+                        style={styles.addButton}>
+                        <Image style={styles.addButtonImage} source={add} />
+                      </TouchableOpacity>
+                    </View>
+
+                  </View>
+                </View>
+              </View>;
+            }}
+          />
+
           {/* OVERALL: Scroll view main view */}
           <View style={styles.mainView}>
             {/* A. Left side view */}
@@ -74,7 +218,9 @@ function App() {
                 flex: 0.2,
                 justifyContent: 'center',
                 alignContent: 'center',
-                marginLeft: 11,
+                // marginLeft: 11,
+                top: "-120%",
+                marginLeft: "10%",
                 // borderWidth: 1,
                 // borderColor: 'yellow',
               }}>
@@ -93,31 +239,18 @@ function App() {
                 </Animated.View>
               </View>
 
-
-              {/* 2. Middle Top Image  */}
-              <View style={{
-                flex: 0.6,
-                justifyContent: 'center',
-                marginLeft: topFries ? "-30%" : 0,
-                marginTop: topFries ? "-40%" : 0,
-                // borderWidth: 1,
-                // borderColor: 'black',
-              }}>
-                <Image style={styles.topMainImage} source={topFries} />
-              </View>
-
               {/* 3. Two stars - Right Side  */}
               <View style={{
-                flex: 0.2,
+                flex: 0.8,
                 // borderWidth: 1,
                 // borderColor: 'purple',
               }}>
                 {/* 3.1 Big Right Star - Top right */}
                 <Animated.View
                   style={{
-                    marginTop: 32,
+                    marginTop: "-135%",
                     position: 'absolute',
-                    right: 20,
+                    right: 22,
                     width: 25,
                     height: 27,
                     // borderWidth: 1,
@@ -133,7 +266,7 @@ function App() {
                 {/* 3.2 Small Right Star - Bottom right */}
                 <Animated.View
                   style={{
-                    marginTop: 100,
+                    marginTop: "-90%",
                     position: 'absolute',
                     right: 4,
                     width: 11,
@@ -148,30 +281,17 @@ function App() {
                   <Image style={styles.starSmall} source={starBig} />
                 </Animated.View>
               </View>
-
-            </View>
-            {/* B. Right side view */}
-            <View style={styles.secondContainer}>
-              <View style={styles.secondAContainer}>
-                <Text style={styles.foodTypeText}>FRIES</Text>
-                <Text style={styles.priceText}>4$</Text>
-                <TouchableOpacity onPress={() => { onAddItem(); }}
-                  style={styles.addButton}>
-                  <Image style={styles.addButtonImage} source={add} />
-                </TouchableOpacity>
-              </View>
-
             </View>
           </View>
 
           {/* MIDDLE LINE */}
-          <View style={{ width: "100%", height: 1, top: 75, backgroundColor: "#F2F1F1" }} />
+          <View style={{ width: "100%", height: 1, top: -211, backgroundColor: "#F2F1F1" }} />
 
           {/* TRAY VIEW */}
           <View style={{
             width: "100%", alignItems: 'center',
             justifyContent: 'center',
-            top: 76,
+            top: -211,
           }}>
             <Image style={{ width: 260, height: 100, top: 40 }} source={tray} />
           </View>
@@ -180,7 +300,7 @@ function App() {
             style={{
               width: 130,
               height: 130,
-              top: "-28%",
+              top: "-59%",
               marginLeft: 85,
               zIndex: 2,
               opacity,
@@ -206,24 +326,7 @@ function App() {
                 style={styles.iconBehave}
                 onPress={() => {
                   console.log('onPress Nav bar 1');
-                  Animated.timing(mediumStarTranslation, {
-                    toValue: 0,
-                    delay: 200,
-                    duration: 1000,
-                    useNativeDriver: true,
-                  }).start();
-                  Animated.timing(bigStarTranslation, {
-                    toValue: 0,
-                    delay: 200,
-                    duration: 1000,
-                    useNativeDriver: true,
-                  }).start();
-                  Animated.timing(smallStarTranslation, {
-                    toValue: 0,
-                    delay: 200,
-                    duration: 1000,
-                    useNativeDriver: true,
-                  }).start();
+                  onetoZero();
                 }}>
                 <Image style={styles.nav1} source={navBarFav} />
               </Pressable>
@@ -232,45 +335,7 @@ function App() {
               <Pressable
                 style={styles.iconBehave}
                 onPress={() => {
-                  Animated.parallel([
-                    Animated.timing(mediumStarTranslation.x, {
-                      toValue: 170,
-                      delay: 200,
-                      duration: 1000,
-                      useNativeDriver: true,
-                    }),
-                    Animated.timing(mediumStarTranslation.y, {
-                      toValue: -50,
-                      delay: 200,
-                      duration: 1000,
-                      useNativeDriver: true,
-                    }),
-                    Animated.timing(bigStarTranslation.x, {
-                      toValue: -10,
-                      delay: 200,
-                      duration: 1000,
-                      useNativeDriver: true,
-                    }),
-                    Animated.timing(bigStarTranslation.y, {
-                      toValue: 170,
-                      delay: 200,
-                      duration: 1000,
-                      useNativeDriver: true,
-                    }),
-
-                    Animated.timing(smallStarTranslation.x, {
-                      toValue: -150,
-                      delay: 200,
-                      duration: 1000,
-                      useNativeDriver: true,
-                    }),
-                    Animated.timing(smallStarTranslation.y, {
-                      toValue: 120,
-                      delay: 200,
-                      duration: 1000,
-                      useNativeDriver: true,
-                    }),
-                  ]).start();
+                  zeroToOne();
                   console.log('onPress Nav bar 2');
                 }}>
                 <Image style={styles.nav2} source={navBarFood} />
@@ -302,8 +367,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    flex: 1,
-    height: '100%',
+    // flex: 1,
+    // height: '100%',
     backgroundColor: '#fff',
     // alignItems: 'center',
     // justifyContent: 'flex-start',
