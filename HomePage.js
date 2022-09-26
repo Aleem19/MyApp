@@ -239,14 +239,14 @@ function HomePage() {
         }),
         Animated.timing(foodTypeTextTranslation.x, {
           toValue: 0,
-          delay: 100,
-          duration: 1000,
+          delay: 20,
+          duration: 700,
           useNativeDriver: true,
         }),
         Animated.timing(foodTypeTextTranslation.y, {
           toValue: 0,
-          delay: 100,
-          duration: 1000,
+          delay: 20,
+          duration: 700,
           useNativeDriver: true,
         }),
       ]),
@@ -297,20 +297,20 @@ function HomePage() {
       Animated.parallel([
         Animated.timing(foodTypeOpacity, {
           toValue: 1,
-          delay: 100,
-          duration: 1000,
+          delay: 20,
+          duration: 700,
           useNativeDriver: true,
         }),
         Animated.timing(foodTypeTextTranslation.x, {
           toValue: 0,
-          delay: 100,
-          duration: 1000,
+          delay: 20,
+          duration: 700,
           useNativeDriver: true,
         }),
         Animated.timing(foodTypeTextTranslation.y, {
           toValue: 0,
-          delay: 100,
-          duration: 1000,
+          delay: 20,
+          duration: 700,
           useNativeDriver: true,
         }),
       ]),
@@ -379,20 +379,20 @@ function HomePage() {
       Animated.parallel([
         Animated.timing(foodTypeOpacity, {
           toValue: 1,
-          delay: 100,
-          duration: 1000,
+          delay: 20,
+          duration: 700,
           useNativeDriver: true,
         }),
         Animated.timing(foodTypeTextTranslation.x, {
           toValue: 0,
-          delay: 100,
-          duration: 1000,
+          delay: 20,
+          duration: 700,
           useNativeDriver: true,
         }),
         Animated.timing(foodTypeTextTranslation.y, {
           toValue: 0,
-          delay: 100,
-          duration: 1000,
+          delay: 20,
+          duration: 700,
           useNativeDriver: true,
         }),
       ]),
@@ -433,23 +433,12 @@ function HomePage() {
             style={{
               height: 286,
               top: 75,
-              // borderWidth: 1,
-              // borderColor: "blue",
             }}
             horizontal
             pagingEnabled
             bounces={false}
             onViewableItemsChanged={onViewCallBack}
             viewabilityConfig={viewConfigRef.current}
-            // onScroll={(event) => {
-            //   // console.log("eveenttt", event);
-            //   if (currentIndex === 1) {
-            //     zeroToOne();
-            //   } else if (currentIndex === 0) {
-            //     onetoZero();
-            //   }
-
-            // }}
             onScrollBeginDrag={() => {
               if (previousIndex.current === 0 && currentIndex.current === 0) {
                 zeroToOne();
@@ -475,9 +464,6 @@ function HomePage() {
                   style={{
                     width: Dimensions.get('screen').width,
                     height: 285,
-                    // backgroundColor: (index === 0) ? "pink" : (index === 1) ? "blue" : "green",
-                    // borderWidth: 1,
-                    // borderColor: "green",
                   }}>
                   {/* OVERALL: Scroll view main view */}
                   <View
@@ -497,23 +483,11 @@ function HomePage() {
                           flex: 1,
                           marginLeft: 0,
                           marginTop: 0,
-                          // transform: [
-                          //   { translateX: friesTranslation.x },
-                          //   { translateY: friesTranslation.y },
-                          // ],
-                          // borderWidth: 1,
-                          // borderColor: 'black',
                         }}>
                         <Animated.Image
                           style={{
                             width: 245,
                             height: 270,
-                            // opacity: topViewOpacity,
-                            // transform: [[
-                            //   { translateX: friesTranslation.x },
-                            //   { translateY: friesTranslation.y },
-                            // ],
-                            // ],
                           }}
                           source={item.imageName}
                         />
@@ -564,15 +538,11 @@ function HomePage() {
                   // marginLeft: 11,
                   top: '-120%',
                   marginLeft: '10%',
-                  // borderWidth: 1,
-                  // borderColor: 'yellow',
                 }}>
                 <Animated.View
                   style={{
                     width: 15,
                     height: 17,
-                    // borderWidth: 1,
-                    // borderColor: 'red',
                     transform: [
                       {translateX: mediumStarTranslation.x},
                       {translateY: mediumStarTranslation.y},
@@ -586,8 +556,6 @@ function HomePage() {
               <View
                 style={{
                   flex: 0.8,
-                  // borderWidth: 1,
-                  // borderColor: 'purple',
                 }}>
                 {/* 3.1 Big Right Star - Top right */}
                 <Animated.View
@@ -597,8 +565,6 @@ function HomePage() {
                     right: 22,
                     width: 25,
                     height: 27,
-                    // borderWidth: 1,
-                    // borderColor: 'blue',
                     transform: [
                       {translateX: bigStarTranslation.x},
                       {translateY: bigStarTranslation.y},
@@ -615,8 +581,6 @@ function HomePage() {
                     right: 4,
                     width: 11,
                     height: 12,
-                    // borderWidth: 1,
-                    // borderColor: 'blue',
                     transform: [
                       {translateX: smallStarTranslation.x},
                       {translateY: smallStarTranslation.y},
@@ -734,34 +698,22 @@ const styles = StyleSheet.create({
     // flex: 1,
     // height: '100%',
     backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'flex-start',
   },
   mainView: {
     top: 75,
     height: 286,
     flexDirection: 'row',
-    // borderWidth: 1,
-    // borderColor: 'grey',
   },
   firstContainer: {
     zIndex: 1,
-    // borderWidth: 1,
-    // borderColor: 'green',
     flex: 0.55,
     flexDirection: 'row',
-    // justifyContent: 'center',
   },
   secondContainer: {
-    // borderWidth: 1,
-    // borderColor: 'blue',
     flex: 0.45,
     flexDirection: 'row',
-    // justifyContent: 'center',
   },
   secondAContainer: {
-    // borderWidth: 1,
-    // borderColor: 'blue',
     flex: 0.75,
     flexDirection: 'column',
   },
