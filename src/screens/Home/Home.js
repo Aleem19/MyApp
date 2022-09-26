@@ -128,7 +128,7 @@ function Home() {
           useNativeDriver: true,
         }),
       ]).start();
-    } else if (currentIndex.current === 1) {
+    } else if (currentIndex.current % 2 !== 0) {
       Animated.parallel([
         Animated.timing(opacity2, {
           toValue: 1,
@@ -149,7 +149,7 @@ function Home() {
           useNativeDriver: true,
         }),
       ]).start();
-    } else if (currentIndex.current === 2) {
+    } else if (currentIndex.current % 2 === 0) {
       Animated.parallel([
         Animated.timing(opacity3, {
           toValue: 1,
