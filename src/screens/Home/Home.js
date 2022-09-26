@@ -10,13 +10,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {setCardItems} from '../Redux/index';
+import {setCardItems} from '../../redux/index';
 import {
   navBarDrink,
   navBarFood,
   navBarSpl,
   navBarFav,
-} from '../assests/icons/index';
+} from '../../../assests/icons/index';
 
 import {
   starBig,
@@ -32,9 +32,9 @@ import {
   plateBurger,
   addressPin,
   phone,
-} from '../assests/images/index';
+} from '../../../assests/images/index';
 import styles from './styles';
-function HomePage() {
+function Home() {
   const dispatch = useDispatch();
   const {cartData} = useSelector(state => state.indexReducer);
 
@@ -709,4 +709,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default Home;

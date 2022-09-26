@@ -21,7 +21,6 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-<<<<<<< HEAD
 xcuserdata
 *.xccheckout
 *.moved-aside
@@ -71,7 +70,6 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
-=======
 
 ## Obj-C/Swift specific
 *.hmap
@@ -139,4 +137,3 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
->>>>>>> b7420f0efb6dc369de48e55c60c26be0e625c90e

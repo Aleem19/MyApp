@@ -248,8 +248,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
     justifyContent: 'center',
     flexDirection: 'row',
-    // position: 'absolute', //Here is the trick
-    // bottom: 0, //Here is the trick
   },
   paySubView: {
     backgroundColor: 'white',
