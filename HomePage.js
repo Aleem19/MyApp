@@ -37,12 +37,18 @@ import {
   plateFries,
   plateBurger,
 } from './assests/images/index';
+import {transform} from '@babel/core';
 function HomePage() {
   const dispatch = useDispatch();
   const {cartData} = useSelector(state => state.indexReducer);
 
   const navBarArray = [{img: 'navBarFav', style: styles.nav1}];
-  // const mediumStarTranslation = useRef(new Animated.Value(0)).current;
+
+  const foodTypeTextTranslation = useRef(
+    new Animated.ValueXY({x: 0, y: 0}),
+  ).current;
+  const foodTypeOpacity = useRef(new Animated.Value(1)).current;
+
   const mediumStarTranslation = useRef(
     new Animated.ValueXY({x: 0, y: 0}),
   ).current;
@@ -69,9 +75,27 @@ function HomePage() {
 
   const currentIndex = useRef(0);
   let data = [
-    {name: '1', key: 1, imageName: topFries, bottomImageName: plateFries},
-    {name: '2', key: 2, imageName: topCoffee, bottomImageName: plateCoffee},
-    {name: '3', key: 4, imageName: topBurger, bottomImageName: plateBurger},
+    {
+      name: 'FRIES',
+      price: '4$',
+      key: 1,
+      imageName: topFries,
+      bottomImageName: plateFries,
+    },
+    {
+      name: 'LATTE',
+      price: '3$',
+      key: 2,
+      imageName: topCoffee,
+      bottomImageName: plateCoffee,
+    },
+    {
+      name: 'BURGER',
+      price: '6$',
+      key: 4,
+      imageName: topBurger,
+      bottomImageName: plateBurger,
+    },
   ];
 
   const getSelectedData = (selectedItem?) => {
@@ -146,79 +170,232 @@ function HomePage() {
   };
 
   function zeroToOne() {
-    Animated.parallel([
-      // Animated.timing(topViewOpacity, { //fade Out
-      //   toValue: 0,
-      //   delay: 0,
-      //   duration: 100,
-      //   useNativeDriver: true,
-      // }),
-      Animated.timing(mediumStarTranslation.x, {
-        toValue: 140,
-        delay: 200,
-        duration: 1000,
-        useNativeDriver: true,
-      }),
-      Animated.timing(mediumStarTranslation.y, {
-        toValue: -90,
-        delay: 200,
-        duration: 1000,
-        useNativeDriver: true,
-      }),
-      Animated.timing(bigStarTranslation.x, {
-        toValue: -28,
-        delay: 200,
-        duration: 1000,
-        useNativeDriver: true,
-      }),
-      Animated.timing(bigStarTranslation.y, {
-        toValue: 100,
-        delay: 200,
-        duration: 1000,
-        useNativeDriver: true,
-      }),
-      Animated.timing(smallStarTranslation.x, {
-        toValue: -170,
-        delay: 200,
-        duration: 1000,
-        useNativeDriver: true,
-      }),
-      Animated.timing(smallStarTranslation.y, {
-        toValue: 47,
-        delay: 200,
-        duration: 500,
-        useNativeDriver: true,
-      }),
+    Animated.sequence([
+      Animated.parallel([
+        Animated.timing(foodTypeOpacity, {
+          //fade Out
+          toValue: 0,
+          delay: 10,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.x, {
+          toValue: 0,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.y, {
+          toValue: -100,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(mediumStarTranslation.x, {
+          toValue: 140,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(mediumStarTranslation.y, {
+          toValue: -90,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(bigStarTranslation.x, {
+          toValue: -28,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(bigStarTranslation.y, {
+          toValue: 100,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(smallStarTranslation.x, {
+          toValue: -170,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(smallStarTranslation.y, {
+          toValue: 47,
+          delay: 200,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.parallel([
+        Animated.timing(foodTypeOpacity, {
+          toValue: 1,
+          delay: 100,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.x, {
+          toValue: 0,
+          delay: 100,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.y, {
+          toValue: 0,
+          delay: 100,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]),
     ]).start();
   }
 
   function onetoZero() {
-    // Animated.timing(topViewOpacity, { //fade Out
-    //   toValue: 1,
-    //   delay: 500,
-    //   duration: 1000,
-    //   useNativeDriver: true,
-    // }).start();
-    Animated.timing(mediumStarTranslation, {
-      toValue: 0,
-      delay: 200,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(bigStarTranslation, {
-      toValue: 0,
-      delay: 200,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(smallStarTranslation, {
-      toValue: 0,
-      delay: 200,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
+    Animated.sequence([
+      Animated.parallel([
+        Animated.timing(foodTypeOpacity, {
+          //fade Out
+          toValue: 0,
+          delay: 10,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.x, {
+          toValue: 0,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.y, {
+          toValue: -100,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(mediumStarTranslation, {
+          toValue: 0,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(bigStarTranslation, {
+          toValue: 0,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(smallStarTranslation, {
+          toValue: 0,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.parallel([
+        Animated.timing(foodTypeOpacity, {
+          toValue: 1,
+          delay: 100,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.x, {
+          toValue: 0,
+          delay: 100,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.y, {
+          toValue: 0,
+          delay: 100,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]).start();
   }
 
+  function evenToOdd() {
+    Animated.sequence([
+      Animated.parallel([
+        Animated.timing(foodTypeOpacity, {
+          //fade Out
+          toValue: 0,
+          delay: 10,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.x, {
+          toValue: 0,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.y, {
+          toValue: -100,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(mediumStarTranslation.x, {
+          toValue: 10,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(mediumStarTranslation.y, {
+          toValue: -120,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(bigStarTranslation.x, {
+          toValue: -80,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(bigStarTranslation.y, {
+          toValue: 100,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(smallStarTranslation.x, {
+          toValue: 0,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(smallStarTranslation.y, {
+          toValue: 0,
+          delay: 200,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.parallel([
+        Animated.timing(foodTypeOpacity, {
+          toValue: 1,
+          delay: 100,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.x, {
+          toValue: 0,
+          delay: 100,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(foodTypeTextTranslation.y, {
+          toValue: 0,
+          delay: 100,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]).start();
+  }
   const onViewCallBack = React.useCallback(viewableItems => {
     viewableItems &&
       viewableItems.changed &&
@@ -230,11 +407,9 @@ function HomePage() {
       });
   }, []);
 
-  const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 50});
-  // console.log(
-  //   'outttt....',
-  //   cartData.filter((el, i) => cartData[i] !== el),
-  // );
+  const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 80});
+
+  // console.log('outttt....', cartData);
 
   return (
     <Fragment>
@@ -268,11 +443,15 @@ function HomePage() {
               } else if (currentIndex.current === 0) {
                 zeroToOne();
               }
+              // else if (currentIndex.current === 2) {
+              //   console.log("sdlkds", currentIndex);
+              //   evenToOdd();
+              // }
               //modules even odd
               // zeroToOne();
             }}
             onScrollEndDrag={() => {
-              // onetoZero();
+              //
             }}
             showsHorizontalScrollIndicator={false}
             keyExtractor={item => item.key}
@@ -331,9 +510,19 @@ function HomePage() {
 
                     {/* B. Right side view */}
                     <View style={styles.secondContainer}>
-                      <View style={styles.secondAContainer}>
-                        <Text style={styles.foodTypeText}>FRIES</Text>
-                        <Text style={styles.priceText}>4$</Text>
+                      <Animated.View
+                        style={[
+                          styles.secondAContainer,
+                          {opacity: foodTypeOpacity},
+                          {
+                            transform: [
+                              {translateX: foodTypeTextTranslation.x},
+                              {translateY: foodTypeTextTranslation.y},
+                            ],
+                          },
+                        ]}>
+                        <Text style={styles.foodTypeText}>{item.name}</Text>
+                        <Text style={styles.priceText}>{item.price}</Text>
                         <TouchableOpacity
                           onPress={e => {
                             onAddItem(e, item);
@@ -341,7 +530,7 @@ function HomePage() {
                           style={styles.addButton}>
                           <Image style={styles.addButtonImage} source={add} />
                         </TouchableOpacity>
-                      </View>
+                      </Animated.View>
                     </View>
                   </View>
                 </View>
@@ -456,28 +645,28 @@ function HomePage() {
                 console.log('item', item);
                 if (item.index !== currentIndex) {
                   return ( */}
-                    <Animated.Image
-                      // key={i}
-                      style={{
-                        width: 85,
-                        height: 85,
-                        top: '-61%',
-                        marginLeft: 120,
-                        zIndex: 2,
-                        opacity: opacity1,
-                        right: -100,
-                        transform: [
-                          {
-                            translateX: opacityTranslation.x,
-                          },
-                          {
-                            translateY: opacityTranslation.y,
-                          },
-                        ],
-                      }}
-                      source={plateFries}
-                    />
-                  {/* );
+          <Animated.Image
+            // key={i}
+            style={{
+              width: 85,
+              height: 85,
+              top: '-61%',
+              marginLeft: 120,
+              zIndex: 2,
+              opacity: opacity1,
+              right: -100,
+              transform: [
+                {
+                  translateX: opacityTranslation.x,
+                },
+                {
+                  translateY: opacityTranslation.y,
+                },
+              ],
+            }}
+            source={plateFries}
+          />
+          {/* );
                 }
               })} */}
 
