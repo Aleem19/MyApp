@@ -396,7 +396,7 @@ const MainView = () => {
     ]).start();
   }
 
-  const onViewCallBack = React.useCallback(viewableItems => {
+  const onViewCallBack = React.useRef(viewableItems => {
     viewableItems &&
       viewableItems.changed &&
       viewableItems.changed.map(items => {
@@ -413,13 +413,14 @@ const MainView = () => {
 
   return (
     <View style={styles.container}>
+      {/*  */}
       <Animated.FlatList
         data={data}
         style={styles.flatList}
         horizontal
         pagingEnabled
         bounces={false}
-        onViewableItemsChanged={onViewCallBack}
+        onViewableItemsChanged={onViewCallBack.current}
         viewabilityConfig={viewConfigRef.current}
         onScrollBeginDrag={() => {
           if (previousIndex.current === 0 && currentIndex.current === 0) {
