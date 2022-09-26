@@ -30,10 +30,10 @@ import {
   plateCoffee,
   plateFries,
   plateBurger,
-  addressPin,
-  phone,
 } from '../../../assests/images/index';
 import styles from './styles';
+import BottomButtonGroup from '../../components/bottomButtonGroup';
+
 function Home() {
   const dispatch = useDispatch();
   const {cartData} = useSelector(state => state.indexReducer);
@@ -66,7 +66,6 @@ function Home() {
 
   const currentIndex = useRef(0);
   const previousIndex = useRef(0);
-  let finalPrice = 0;
   let data = [
     {
       name: 'FRIES',
@@ -93,7 +92,6 @@ function Home() {
 
   const getSelectedData = selectedItem => {
     dispatch(setCardItems(selectedItem));
-    console.log('getSelectedData....', selectedItem);
   };
 
   const onAddItem = item => {
@@ -101,7 +99,6 @@ function Home() {
       if (cartData && cartData.includes(currentIndex.current)) {
         //do nothing
       } else {
-        console.log('else inside....', currentIndex.current);
         const payload = {
           index: currentIndex.current,
           imgName: item.bottomImageName,
@@ -109,7 +106,6 @@ function Home() {
         getSelectedData(payload);
       }
     } else {
-      console.log('else outside....', currentIndex.current);
       const payload = {
         index: currentIndex.current,
         imgName: item.bottomImageName,
@@ -426,20 +422,7 @@ function Home() {
 
   const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 50});
 
-  const getPrice = () => {
-    cartData
-      .filter((v, i, a) => a.findIndex(v2 => v2.imgName === v.imgName) === i)
-      .map(priceItem => {
-        if (priceItem.index === 0) {
-          finalPrice += 4;
-        } else if (priceItem.index === 1) {
-          finalPrice += 3;
-        } else if (priceItem.index === 2) {
-          finalPrice += 6;
-        }
-      });
-    return finalPrice;
-  };
+
 
   return (
     <Fragment>
@@ -590,17 +573,7 @@ function Home() {
             <Image style={styles.cartImg} source={tray} />
           </View>
 
-          {/* {cartData &&
-            cartData
-              .filter(
-                (v, i, a) => a.findIndex(v2 => v2.imgName === v.imgName) === i,
-              )
-              .map((item, i) => {
-                console.log('item', item);
-                if (item.index !== currentIndex) {
-                  return ( */}
           <Animated.Image
-            // key={i}
             style={[
               styles.cartItem1,
               {opacity: opacity1},
@@ -612,12 +585,8 @@ function Home() {
               },
             ]}
             source={plateFries}
-            // source={item.imgName}
           />
 
-          {/* );
-                }
-              })} */}
           <Animated.Image
             style={[
               styles.cartItem2,
@@ -645,60 +614,20 @@ function Home() {
             ]}
             source={plateBurger}
           />
-          <View style={styles.bottomMainView}>
-            <View style={styles.directionsInfo}>
-              <View style={styles.addressPinView}>
-                <Image source={addressPin} style={styles.addressPin} />
-              </View>
-              <View style={styles.addressDescMainView}>
-                <Text>Dongcheng District Metro Cultural Building</Text>
-              </View>
-              <View style={styles.phoneView}>
-                <Image source={phone} style={styles.phoneImg} />
-              </View>
-            </View>
-            <View style={styles.payMainView}>
-              <View style={styles.paySubView}>
-                <Text style={styles.getPrice}>
-                  {`${getPrice()}`}
-                  {'$'}
-                </Text>
-              </View>
-              <View style={styles.payButtonView}>
-                <Text style={styles.payText}>Pay</Text>
-              </View>
-            </View>
-          </View>
-
+          <BottomButtonGroup cartData={cartData} />
           <View style={styles.navContainer}>
             <View style={styles.navBar}>
-              <Pressable
-                style={styles.iconBehave}
-                onPress={() => {
-                  console.log('onPress Nav bar 1');
-                }}>
+              <Pressable style={styles.iconBehave}>
                 <Image style={styles.nav1} source={navBarFav} />
               </Pressable>
 
-              <Pressable
-                style={styles.iconBehave}
-                onPress={() => {
-                  console.log('onPress Nav bar 2');
-                }}>
+              <Pressable style={styles.iconBehave}>
                 <Image style={styles.nav2} source={navBarFood} />
               </Pressable>
-              <Pressable
-                style={styles.iconBehave}
-                onPress={() => {
-                  console.log('onPress Nav bar 3');
-                }}>
+              <Pressable style={styles.iconBehave}>
                 <Image style={styles.nav3} source={navBarDrink} />
               </Pressable>
-              <Pressable
-                style={styles.iconBehave}
-                onPress={() => {
-                  console.log('onPress Nav bar 4');
-                }}>
+              <Pressable style={styles.iconBehave}>
                 <Image style={styles.nav4} source={navBarSpl} />
               </Pressable>
             </View>
