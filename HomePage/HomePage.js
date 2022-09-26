@@ -2,13 +2,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useMemo, useState, useEffect, useRef, Fragment} from 'react';
+import React, {useRef, Fragment} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCardItems} from './Redux/index';
 import {
   Pressable,
   SafeAreaView,
-  StyleSheet,
   Text,
   Image,
   View,
@@ -17,12 +15,13 @@ import {
   Dimensions,
 } from 'react-native';
 
+import {setCardItems} from '../Redux/index';
 import {
   navBarDrink,
   navBarFood,
   navBarSpl,
   navBarFav,
-} from './assests/icons/index';
+} from '../assests/icons/index';
 
 import {
   starBig,
@@ -36,8 +35,8 @@ import {
   plateCoffee,
   plateFries,
   plateBurger,
-} from './assests/images/index';
-import {transform} from '@babel/core';
+} from '../assests/images/index';
+import styles from './styles';
 function HomePage() {
   const dispatch = useDispatch();
   const {cartData} = useSelector(state => state.indexReducer);
@@ -141,7 +140,7 @@ function HomePage() {
           useNativeDriver: true,
         }),
         Animated.timing(opacityTranslation.x, {
-          toValue: -20,
+          toValue: -45,
           delay: 200,
           duration: 1000,
           useNativeDriver: true,
@@ -153,21 +152,48 @@ function HomePage() {
           useNativeDriver: true,
         }),
       ]).start();
-    } else {
-      // Animated.parallel([
-      //   Animated.timing(opacityTranslation.x, {
-      //     toValue: -55,
-      //     delay: 200,
-      //     duration: 1000,
-      //     useNativeDriver: true,
-      //   }),
-      //   Animated.timing(opacityTranslation.y, {
-      //     toValue: 145,
-      //     delay: 200,
-      //     duration: 1000,
-      //     useNativeDriver: true,
-      //   }),
-      // ]).start();
+    } else if (currentIndex.current === 1) {
+      Animated.parallel([
+        Animated.timing(opacity2, {
+          toValue: 1,
+          delay: 100,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(plateCoffeeTranslation.x, {
+          toValue: -95,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(plateCoffeeTranslation.y, {
+          toValue: 130,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else if (currentIndex.current === 2) {
+      Animated.parallel([
+        Animated.timing(opacity3, {
+          toValue: 1,
+          delay: 100,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(plateBurgerTranslation.x, {
+          toValue: -144,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(plateBurgerTranslation.y, {
+          toValue: 168,
+          delay: 200,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]).start();
     }
   };
 
@@ -433,6 +459,7 @@ function HomePage() {
             style={{
               height: 286,
               top: 75,
+              zIndex: 2,
             }}
             horizontal
             pagingEnabled
@@ -442,13 +469,25 @@ function HomePage() {
             onScrollBeginDrag={() => {
               if (previousIndex.current === 0 && currentIndex.current === 0) {
                 zeroToOne();
-              } else if (currentIndex.current % 2 !== 0 && previousIndex.current === 0) {
+              } else if (
+                currentIndex.current % 2 !== 0 &&
+                previousIndex.current === 0
+              ) {
                 oddToEven();
-              } else if (currentIndex.current === 0 && previousIndex.current % 2 !== 0) {
+              } else if (
+                currentIndex.current === 0 &&
+                previousIndex.current % 2 !== 0
+              ) {
                 zeroToOne();
-              } else if ((currentIndex.current % 2 === 0) && (previousIndex.current % 2 !== 0)) {
+              } else if (
+                currentIndex.current % 2 === 0 &&
+                previousIndex.current % 2 !== 0
+              ) {
                 zeroToOne();
-              } else if ((currentIndex.current % 2 !== 0) && (previousIndex.current % 2 === 0)) {
+              } else if (
+                currentIndex.current % 2 !== 0 &&
+                previousIndex.current % 2 === 0
+              ) {
                 onetoZero();
               }
             }}
@@ -599,6 +638,7 @@ function HomePage() {
               height: 1,
               top: -211,
               backgroundColor: '#F2F1F1',
+              zIndex: -99,
             }}
           />
 
@@ -609,6 +649,7 @@ function HomePage() {
               alignItems: 'center',
               justifyContent: 'center',
               top: -211,
+              zIndex: -60,
             }}>
             <Image style={{width: 260, height: 100, top: 40}} source={tray} />
           </View>
@@ -625,11 +666,11 @@ function HomePage() {
           <Animated.Image
             // key={i}
             style={{
-              width: 85,
-              height: 85,
-              top: '-61%',
-              marginLeft: 120,
-              zIndex: 2,
+              zIndex: -20,
+              width: 90,
+              height: 90,
+              top: '-46%',
+              marginLeft: 145,
               opacity: opacity1,
               right: -100,
               transform: [
@@ -642,11 +683,53 @@ function HomePage() {
               ],
             }}
             source={plateFries}
+            // source={item.imgName}
           />
+
           {/* );
                 }
               })} */}
+          <Animated.Image
+            style={{
+              width: 110,
+              height: 110,
+              top: '-55%',
+              marginLeft: 145,
+              zIndex: -50,
+              opacity: opacity2,
+              right: -100,
+              transform: [
+                {
+                  translateX: plateCoffeeTranslation.x,
+                },
+                {
+                  translateY: plateCoffeeTranslation.y,
+                },
+              ],
+            }}
+            source={plateCoffee}
+          />
 
+          <Animated.Image
+            style={{
+              width: 120,
+              height: 120,
+              top: '-65%',
+              marginLeft: 140,
+              zIndex: -30,
+              opacity: opacity3,
+              right: -100,
+              transform: [
+                {
+                  translateX: plateBurgerTranslation.x,
+                },
+                {
+                  translateY: plateBurgerTranslation.y,
+                },
+              ],
+            }}
+            source={plateBurger}
+          />
           <View style={styles.navContainer}>
             <View style={styles.navBar}>
               {/* 1st Nav Bar Button */}
@@ -689,117 +772,5 @@ function HomePage() {
     </Fragment>
   );
 }
-
-const styles = StyleSheet.create({
-  safeAreaContainer: {
-    flex: 1,
-  },
-  container: {
-    // flex: 1,
-    // height: '100%',
-    backgroundColor: '#fff',
-  },
-  mainView: {
-    top: 75,
-    height: 286,
-    flexDirection: 'row',
-  },
-  firstContainer: {
-    zIndex: 1,
-    flex: 0.55,
-    flexDirection: 'row',
-  },
-  secondContainer: {
-    flex: 0.45,
-    flexDirection: 'row',
-  },
-  secondAContainer: {
-    flex: 0.75,
-    flexDirection: 'column',
-  },
-  navContainer: {
-    position: 'absolute',
-    alignItems: 'center',
-    top: 0,
-    height: 73,
-  },
-  navBar: {
-    flexDirection: 'row',
-    backgroundColor: '#FD003C',
-    width: '100%',
-    justifyContent: 'space-evenly',
-  },
-  nav1: {
-    height: 32,
-    width: 21,
-  },
-  nav2: {
-    height: 32,
-    width: 31,
-  },
-  nav3: {
-    height: 35,
-    width: 25,
-  },
-  nav4: {
-    height: 34,
-    width: 34,
-  },
-  iconBehave: {
-    padding: 20,
-  },
-  screenText: {
-    fontSize: 30,
-    color: 'blue',
-  },
-  starMedium: {
-    width: 15,
-    height: 17,
-  },
-  starBig: {
-    width: 25,
-    height: 27,
-  },
-  starSmall: {
-    width: 11,
-    height: 12,
-  },
-  topMainImage: {
-    width: 245,
-    height: 270,
-    // borderWidth: 1,
-    // borderColor: "blue",
-  },
-  foodTypeText: {
-    fontWeight: '600',
-    top: '20%',
-    fontSize: 32,
-    color: '#EB5C77',
-    textAlign: 'right',
-  },
-  priceText: {
-    fontWeight: '300',
-    top: '20%',
-    fontSize: 24,
-    color: '#EB5C77',
-    right: 0,
-    textAlign: 'right',
-  },
-  addButton: {
-    position: 'absolute',
-    bottom: '15%',
-    right: '-12%',
-    width: 85,
-    height: 85,
-  },
-  addButtonImage: {
-    width: 85,
-    height: 85,
-  },
-  middleLine: {
-    width: '100%',
-    height: 1,
-  },
-});
 
 export default HomePage;
