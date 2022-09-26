@@ -265,7 +265,7 @@ function HomePage() {
     ]).start();
   }
 
-  function onetoZero() {
+  function evenToAdd() {
     Animated.sequence([
       Animated.parallel([
         Animated.timing(foodTypeOpacity, {
@@ -475,7 +475,7 @@ function HomePage() {
                 currentIndex.current % 2 !== 0 &&
                 previousIndex.current % 2 === 0
               ) {
-                onetoZero();
+                evenToAdd();
               }
             }}
             onScrollEndDrag={() => {
@@ -576,7 +576,7 @@ function HomePage() {
                       ],
                     },
                   ]}>
-                  <Image style={styles.starSmall} source={starBig} />
+                  <Image style={styles.starSmall} source={starSmall} />
                 </Animated.View>
               </View>
             </View>
