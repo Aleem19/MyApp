@@ -74,6 +74,8 @@ function HomePage() {
   const opacity3 = useRef(new Animated.Value(0)).current;
 
   const currentIndex = useRef(0);
+  const previousIndex = useRef(0);
+
   let data = [
     {
       name: 'FRIES',
@@ -315,7 +317,7 @@ function HomePage() {
     ]).start();
   }
 
-  function evenToOdd() {
+  function oddToEven() {
     Animated.sequence([
       Animated.parallel([
         Animated.timing(foodTypeOpacity, {
@@ -350,7 +352,7 @@ function HomePage() {
           useNativeDriver: true,
         }),
         Animated.timing(bigStarTranslation.x, {
-          toValue: -80,
+          toValue: -145,
           delay: 200,
           duration: 1000,
           useNativeDriver: true,
@@ -362,13 +364,13 @@ function HomePage() {
           useNativeDriver: true,
         }),
         Animated.timing(smallStarTranslation.x, {
-          toValue: 0,
+          toValue: -20,
           delay: 200,
           duration: 1000,
           useNativeDriver: true,
         }),
         Animated.timing(smallStarTranslation.y, {
-          toValue: 0,
+          toValue: 62,
           delay: 200,
           duration: 500,
           useNativeDriver: true,
@@ -396,18 +398,29 @@ function HomePage() {
       ]),
     ]).start();
   }
+
   const onViewCallBack = React.useCallback(viewableItems => {
     viewableItems &&
       viewableItems.changed &&
       viewableItems.changed.map(items => {
         if (items.isViewable === true) {
+          // if (currentIndex.current % 2 !== 0) {
+          //   previousIndex.current = 1;
+          // } else if (currentIndex.current === 0) {
+          //   previousIndex.current = 0;
+          // } else if (currentIndex.current % 2 === 0) {
+          //   previousIndex.current = 2;
+          // }
+          previousIndex.current = currentIndex.current
+            ? currentIndex.current
+            : 0;
           currentIndex.current = items.index;
-          console.log('isViewable index', items.index);
+          // console.log('isViewable index', items.index);
         }
       });
   }, []);
 
-  const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 80});
+  const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 50});
 
   // console.log('outttt....', cartData);
 
@@ -438,17 +451,17 @@ function HomePage() {
 
             // }}
             onScrollBeginDrag={() => {
-              if (currentIndex.current === 1) {
-                onetoZero();
-              } else if (currentIndex.current === 0) {
+              if (previousIndex.current === 0 && currentIndex.current === 0) {
                 zeroToOne();
+              } else if (currentIndex.current % 2 !== 0 && previousIndex.current === 0) {
+                oddToEven();
+              } else if (currentIndex.current === 0 && previousIndex.current % 2 !== 0) {
+                zeroToOne();
+              } else if ((currentIndex.current % 2 === 0) && (previousIndex.current % 2 !== 0)) {
+                zeroToOne();
+              } else if ((currentIndex.current % 2 !== 0) && (previousIndex.current % 2 === 0)) {
+                onetoZero();
               }
-              // else if (currentIndex.current === 2) {
-              //   console.log("sdlkds", currentIndex);
-              //   evenToOdd();
-              // }
-              //modules even odd
-              // zeroToOne();
             }}
             onScrollEndDrag={() => {
               //
