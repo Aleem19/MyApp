@@ -422,8 +422,6 @@ function Home() {
 
   const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 50});
 
-
-
   return (
     <Fragment>
       <SafeAreaView style={styles.safeAreaContainer}>
