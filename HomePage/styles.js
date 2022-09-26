@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 
 const styles = StyleSheet.create({
   safeAreaContainer: {
@@ -10,6 +10,100 @@ const styles = StyleSheet.create({
     // height: '100%',
     backgroundColor: '#fff',
   },
+  flatList: {
+    height: 286,
+    top: 75,
+    zIndex: 2,
+  },
+  overallMainView: {
+    width: Dimensions.get('screen').width,
+    height: 285,
+  },
+  overallSubMainView: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  foodItemDisplay: {
+    flex: 0.55,
+    flexDirection: 'row',
+  },
+  foodItemSubView: {
+    flex: 1,
+    marginLeft: 0,
+    marginTop: 0,
+  },
+  foodItemImgView: {
+    width: 245,
+    height: 270,
+  },
+  mediumSizedView: {
+    flex: 0.2,
+    justifyContent: 'center',
+    alignContent: 'center',
+    // marginLeft: 11,
+    top: '-120%',
+    marginLeft: '10%',
+  },
+  starsView: {
+    flex: 0.8,
+  },
+  bigSizedAnimatedView: {
+    marginTop: '-135%',
+    position: 'absolute',
+    right: 22,
+    width: 25,
+    height: 27,
+  },
+  smallSizedAnimatedView: {
+    marginTop: '-90%',
+    position: 'absolute',
+    right: 4,
+    width: 11,
+    height: 12,
+  },
+  mediumSizedAnimatedView: {
+    width: 15,
+    height: 17,
+  },
+  cartItemsDisplay: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: -211,
+    zIndex: -60,
+  },
+  separatorLine: {
+    width: '100%',
+    height: 1,
+    top: -211,
+    backgroundColor: '#F2F1F1',
+    zIndex: -99,
+  },
+  cartItem1: {
+    zIndex: -20,
+    width: 90,
+    height: 90,
+    top: '-46%',
+    marginLeft: 145,
+    right: -100,
+  },
+  cartItem2: {
+    width: 110,
+    height: 110,
+    top: '-55%',
+    marginLeft: 145,
+    zIndex: -50,
+    right: -100,
+  },
+  cartItem3: {
+    width: 120,
+    height: 120,
+    top: '-65%',
+    marginLeft: 140,
+    zIndex: -30,
+    right: -100,
+  },
+  cartImg: {width: 260, height: 100, top: 40},
   mainView: {
     top: 75,
     height: 286,

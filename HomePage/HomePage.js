@@ -1,7 +1,3 @@
-/* eslint-disable quotes */
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
-/* eslint-disable react-native/no-inline-styles */
 import React, {useRef, Fragment} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -41,8 +37,6 @@ function HomePage() {
   const dispatch = useDispatch();
   const {cartData} = useSelector(state => state.indexReducer);
 
-  const navBarArray = [{img: 'navBarFav', style: styles.nav1}];
-
   const foodTypeTextTranslation = useRef(
     new Animated.ValueXY({x: 0, y: 0}),
   ).current;
@@ -55,9 +49,6 @@ function HomePage() {
   const smallStarTranslation = useRef(
     new Animated.ValueXY({x: 0, y: 0}),
   ).current;
-
-  const friesTranslation = useRef(new Animated.ValueXY({x: 0, y: 0})).current;
-  const topViewOpacity = useRef(new Animated.Value(1)).current;
 
   const opacityTranslation = useRef(new Animated.ValueXY({x: 0, y: 0})).current;
   const opacity1 = useRef(new Animated.Value(0)).current;
@@ -99,7 +90,7 @@ function HomePage() {
     },
   ];
 
-  const getSelectedData = (selectedItem?) => {
+  const getSelectedData = selectedItem => {
     dispatch(setCardItems(selectedItem));
     console.log('getSelectedData....', selectedItem);
   };
@@ -456,11 +447,7 @@ function HomePage() {
         <View style={styles.container}>
           <Animated.FlatList
             data={data}
-            style={{
-              height: 286,
-              top: 75,
-              zIndex: 2,
-            }}
+            style={styles.flatList}
             horizontal
             pagingEnabled
             bounces={false}
@@ -499,35 +486,14 @@ function HomePage() {
             renderItem={({item, index}) => {
               console.log('heloooo', index);
               return (
-                <View
-                  style={{
-                    width: Dimensions.get('screen').width,
-                    height: 285,
-                  }}>
-                  {/* OVERALL: Scroll view main view */}
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                    }}>
+                <View style={styles.overallMainView}>
+                  <View style={styles.overallSubMainView}>
                     {/* A. Left side view */}
-                    <View
-                      style={{
-                        flex: 0.55,
-                        flexDirection: 'row',
-                      }}>
+                    <View style={styles.foodItemDisplay}>
                       {/* 2. Middle Top Image  */}
-                      <Animated.View
-                        style={{
-                          flex: 1,
-                          marginLeft: 0,
-                          marginTop: 0,
-                        }}>
+                      <Animated.View style={styles.foodItemSubView}>
                         <Animated.Image
-                          style={{
-                            width: 245,
-                            height: 270,
-                          }}
+                          style={styles.foodItemImgView}
                           source={item.imageName}
                         />
                         {/* <Image style={styles.topMainImage} source={item.imageName} /> */}
@@ -569,62 +535,48 @@ function HomePage() {
             {/* A. Left side view */}
             <View style={styles.firstContainer}>
               {/* 1. Medium size star - Left Side  */}
-              <View
-                style={{
-                  flex: 0.2,
-                  justifyContent: 'center',
-                  alignContent: 'center',
-                  // marginLeft: 11,
-                  top: '-120%',
-                  marginLeft: '10%',
-                }}>
+              <View style={styles.mediumSizedView}>
                 <Animated.View
-                  style={{
-                    width: 15,
-                    height: 17,
-                    transform: [
-                      {translateX: mediumStarTranslation.x},
-                      {translateY: mediumStarTranslation.y},
-                    ],
-                  }}>
+                  style={[
+                    styles.mediumSizedAnimatedView,
+                    {
+                      transform: [
+                        {translateX: mediumStarTranslation.x},
+                        {translateY: mediumStarTranslation.y},
+                      ],
+                    },
+                  ]}>
                   <Image style={styles.starMedium} source={starMedium} />
                 </Animated.View>
               </View>
 
               {/* 3. Two stars - Right Side  */}
-              <View
-                style={{
-                  flex: 0.8,
-                }}>
+              <View style={styles.starsView}>
                 {/* 3.1 Big Right Star - Top right */}
                 <Animated.View
-                  style={{
-                    marginTop: '-135%',
-                    position: 'absolute',
-                    right: 22,
-                    width: 25,
-                    height: 27,
-                    transform: [
-                      {translateX: bigStarTranslation.x},
-                      {translateY: bigStarTranslation.y},
-                    ],
-                  }}>
+                  style={[
+                    styles.bigSizedAnimatedView,
+                    {
+                      transform: [
+                        {translateX: bigStarTranslation.x},
+                        {translateY: bigStarTranslation.y},
+                      ],
+                    },
+                  ]}>
                   <Image style={styles.starBig} source={starBig} />
                 </Animated.View>
 
                 {/* 3.2 Small Right Star - Bottom right */}
                 <Animated.View
-                  style={{
-                    marginTop: '-90%',
-                    position: 'absolute',
-                    right: 4,
-                    width: 11,
-                    height: 12,
-                    transform: [
-                      {translateX: smallStarTranslation.x},
-                      {translateY: smallStarTranslation.y},
-                    ],
-                  }}>
+                  style={[
+                    styles.smallSizedAnimatedView,
+                    {
+                      transform: [
+                        {translateX: smallStarTranslation.x},
+                        {translateY: smallStarTranslation.y},
+                      ],
+                    },
+                  ]}>
                   <Image style={styles.starSmall} source={starBig} />
                 </Animated.View>
               </View>
@@ -632,26 +584,11 @@ function HomePage() {
           </View>
 
           {/* MIDDLE LINE */}
-          <View
-            style={{
-              width: '100%',
-              height: 1,
-              top: -211,
-              backgroundColor: '#F2F1F1',
-              zIndex: -99,
-            }}
-          />
+          <View style={styles.separatorLine} />
 
           {/* TRAY VIEW */}
-          <View
-            style={{
-              width: '100%',
-              alignItems: 'center',
-              justifyContent: 'center',
-              top: -211,
-              zIndex: -60,
-            }}>
-            <Image style={{width: 260, height: 100, top: 40}} source={tray} />
+          <View style={styles.cartItemsDisplay}>
+            <Image style={styles.cartImg} source={tray} />
           </View>
 
           {/* {cartData &&
@@ -665,23 +602,16 @@ function HomePage() {
                   return ( */}
           <Animated.Image
             // key={i}
-            style={{
-              zIndex: -20,
-              width: 90,
-              height: 90,
-              top: '-46%',
-              marginLeft: 145,
-              opacity: opacity1,
-              right: -100,
-              transform: [
-                {
-                  translateX: opacityTranslation.x,
-                },
-                {
-                  translateY: opacityTranslation.y,
-                },
-              ],
-            }}
+            style={[
+              styles.cartItem1,
+              {opacity: opacity1},
+              {
+                transform: [
+                  {translateX: opacityTranslation.x},
+                  {translateY: opacityTranslation.y},
+                ],
+              },
+            ]}
             source={plateFries}
             // source={item.imgName}
           />
@@ -690,44 +620,30 @@ function HomePage() {
                 }
               })} */}
           <Animated.Image
-            style={{
-              width: 110,
-              height: 110,
-              top: '-55%',
-              marginLeft: 145,
-              zIndex: -50,
-              opacity: opacity2,
-              right: -100,
-              transform: [
-                {
-                  translateX: plateCoffeeTranslation.x,
-                },
-                {
-                  translateY: plateCoffeeTranslation.y,
-                },
-              ],
-            }}
+            style={[
+              styles.cartItem2,
+              {opacity: opacity2},
+              {
+                transform: [
+                  {translateX: plateCoffeeTranslation.x},
+                  {translateY: plateCoffeeTranslation.y},
+                ],
+              },
+            ]}
             source={plateCoffee}
           />
 
           <Animated.Image
-            style={{
-              width: 120,
-              height: 120,
-              top: '-65%',
-              marginLeft: 140,
-              zIndex: -30,
-              opacity: opacity3,
-              right: -100,
-              transform: [
-                {
-                  translateX: plateBurgerTranslation.x,
-                },
-                {
-                  translateY: plateBurgerTranslation.y,
-                },
-              ],
-            }}
+            style={[
+              styles.cartItem3,
+              {opacity: opacity3},
+              {
+                transform: [
+                  {translateX: plateBurgerTranslation.x},
+                  {translateY: plateBurgerTranslation.y},
+                ],
+              },
+            ]}
             source={plateBurger}
           />
           <View style={styles.navContainer}>
