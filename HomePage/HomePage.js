@@ -8,7 +8,6 @@ import {
   View,
   Animated,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 
 import {setCardItems} from '../Redux/index';
@@ -31,6 +30,8 @@ import {
   plateCoffee,
   plateFries,
   plateBurger,
+  addressPin,
+  phone,
 } from '../assests/images/index';
 import styles from './styles';
 function HomePage() {
@@ -65,7 +66,7 @@ function HomePage() {
 
   const currentIndex = useRef(0);
   const previousIndex = useRef(0);
-
+  let finalPrice = 0;
   let data = [
     {
       name: 'FRIES',
@@ -95,16 +96,10 @@ function HomePage() {
     console.log('getSelectedData....', selectedItem);
   };
 
-  const onAddItem = (event, item) => {
-    event.preventDefault();
-    // console.log('item....', cartData);
+  const onAddItem = item => {
     if (cartData.length) {
-      // const unique = cartData.filter(
-      //   (v, i, a) => a.findIndex(v2 => v2.imgName === v.imgName) === i,
-      // );
-      // console.log('unique..123', unique);
       if (cartData && cartData.includes(currentIndex.current)) {
-        console.log('ifff inside....', currentIndex.current);
+        //do nothing
       } else {
         console.log('else inside....', currentIndex.current);
         const payload = {
@@ -421,25 +416,30 @@ function HomePage() {
       viewableItems.changed &&
       viewableItems.changed.map(items => {
         if (items.isViewable === true) {
-          // if (currentIndex.current % 2 !== 0) {
-          //   previousIndex.current = 1;
-          // } else if (currentIndex.current === 0) {
-          //   previousIndex.current = 0;
-          // } else if (currentIndex.current % 2 === 0) {
-          //   previousIndex.current = 2;
-          // }
           previousIndex.current = currentIndex.current
             ? currentIndex.current
             : 0;
           currentIndex.current = items.index;
-          // console.log('isViewable index', items.index);
         }
       });
   }, []);
 
   const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 50});
 
-  // console.log('outttt....', cartData);
+  const getPrice = () => {
+    cartData
+      .filter((v, i, a) => a.findIndex(v2 => v2.imgName === v.imgName) === i)
+      .map(priceItem => {
+        if (priceItem.index === 0) {
+          finalPrice += 4;
+        } else if (priceItem.index === 1) {
+          finalPrice += 3;
+        } else if (priceItem.index === 2) {
+          finalPrice += 6;
+        }
+      });
+    return finalPrice;
+  };
 
   return (
     <Fragment>
@@ -484,7 +484,6 @@ function HomePage() {
             showsHorizontalScrollIndicator={false}
             keyExtractor={item => item.key}
             renderItem={({item, index}) => {
-              console.log('heloooo', index);
               return (
                 <View style={styles.overallMainView}>
                   <View style={styles.overallSubMainView}>
@@ -516,8 +515,8 @@ function HomePage() {
                         <Text style={styles.foodTypeText}>{item.name}</Text>
                         <Text style={styles.priceText}>{item.price}</Text>
                         <TouchableOpacity
-                          onPress={e => {
-                            onAddItem(e, item);
+                          onPress={() => {
+                            onAddItem(item);
                           }}
                           style={styles.addButton}>
                           <Image style={styles.addButtonImage} source={add} />
@@ -646,23 +645,44 @@ function HomePage() {
             ]}
             source={plateBurger}
           />
+          <View style={styles.bottomMainView}>
+            <View style={styles.directionsInfo}>
+              <View style={styles.addressPinView}>
+                <Image source={addressPin} style={styles.addressPin} />
+              </View>
+              <View style={styles.addressDescMainView}>
+                <Text>Dongcheng District Metro Cultural Building</Text>
+              </View>
+              <View style={styles.phoneView}>
+                <Image source={phone} style={styles.phoneImg} />
+              </View>
+            </View>
+            <View style={styles.payMainView}>
+              <View style={styles.paySubView}>
+                <Text style={styles.getPrice}>
+                  {`${getPrice()}`}
+                  {'$'}
+                </Text>
+              </View>
+              <View style={styles.payButtonView}>
+                <Text style={styles.payText}>Pay</Text>
+              </View>
+            </View>
+          </View>
+
           <View style={styles.navContainer}>
             <View style={styles.navBar}>
-              {/* 1st Nav Bar Button */}
               <Pressable
                 style={styles.iconBehave}
                 onPress={() => {
                   console.log('onPress Nav bar 1');
-                  onetoZero();
                 }}>
                 <Image style={styles.nav1} source={navBarFav} />
               </Pressable>
 
-              {/* 2nd Nav Bar Button */}
               <Pressable
                 style={styles.iconBehave}
                 onPress={() => {
-                  zeroToOne();
                   console.log('onPress Nav bar 2');
                 }}>
                 <Image style={styles.nav2} source={navBarFood} />

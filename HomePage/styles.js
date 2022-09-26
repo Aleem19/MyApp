@@ -5,19 +5,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    // flex: 1,
+    flex: 1,
     zIndex: 1,
     // height: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: '#FFEDED',
   },
   flatList: {
-    height: 286,
+    height: 500,
     top: 75,
     zIndex: 2,
   },
   overallMainView: {
     width: Dimensions.get('screen').width,
-    height: 285,
+    height: '100%',
   },
   overallSubMainView: {
     flex: 1,
@@ -41,21 +41,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     // marginLeft: 11,
-    top: '-120%',
+    top: '-90%',
     marginLeft: '10%',
   },
   starsView: {
     flex: 0.8,
   },
   bigSizedAnimatedView: {
-    marginTop: '-135%',
+    marginTop: '-155%',
     position: 'absolute',
     right: 22,
     width: 25,
     height: 27,
   },
   smallSizedAnimatedView: {
-    marginTop: '-90%',
+    marginTop: '-100%',
     position: 'absolute',
     right: 4,
     width: 11,
@@ -69,13 +69,13 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    top: -211,
+    top: 18,
     zIndex: -60,
   },
   separatorLine: {
     width: '100%',
     height: 1,
-    top: -211,
+    top: 18,
     backgroundColor: '#F2F1F1',
     zIndex: -99,
   },
@@ -83,14 +83,14 @@ const styles = StyleSheet.create({
     zIndex: -20,
     width: 90,
     height: 90,
-    top: '-46%',
+    top: '-30%',
     marginLeft: 145,
     right: -100,
   },
   cartItem2: {
     width: 110,
     height: 110,
-    top: '-55%',
+    top: '-41%',
     marginLeft: 145,
     zIndex: -50,
     right: -100,
@@ -98,13 +98,14 @@ const styles = StyleSheet.create({
   cartItem3: {
     width: 120,
     height: 120,
-    top: '-65%',
+    top: '-55%',
     marginLeft: 140,
     zIndex: -30,
     right: -100,
   },
   cartImg: {width: 260, height: 100, top: 40},
   mainView: {
+    flex: 1,
     top: 75,
     height: 286,
     flexDirection: 'row',
@@ -207,6 +208,75 @@ const styles = StyleSheet.create({
   middleLine: {
     width: '100%',
     height: 1,
+  },
+  bottomMainView: {
+    flexDirection: 'column',
+    position: 'absolute',
+    bottom: 0,
+    flex: 1,
+    height: 115,
+    width: '100%',
+  },
+  directionsInfo: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    flex: 1,
+  },
+  addressPin: {
+    width: 25,
+    height: 33,
+  },
+  addressPinView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 0.2,
+  },
+  addressDescMainView: {
+    flex: 0.6,
+  },
+  phoneView: {
+    alignItems: 'center',
+    flex: 0.2,
+  },
+  phoneImg: {
+    width: 32,
+    height: 32,
+  },
+  payMainView: {
+    width: '100%',
+    height: 55,
+    backgroundColor: 'gray',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    // position: 'absolute', //Here is the trick
+    // bottom: 0, //Here is the trick
+  },
+  paySubView: {
+    backgroundColor: 'white',
+    flex: 0.6,
+    justifyContent: 'center',
+    height: 55,
+  },
+  getPrice: {
+    height: '100%',
+    justifyContent: 'center',
+    paddingTop: 7,
+    paddingLeft: 22,
+    fontWeight: '600',
+    fontSize: 32,
+    color: '#4F4F4F',
+  },
+  payButtonView: {
+    backgroundColor: '#FF5D79',
+    flex: 0.4,
+    height: 55,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  payText: {
+    fontWeight: '600',
+    fontSize: 32,
+    color: '#ffffff',
   },
 });
 
