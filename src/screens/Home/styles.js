@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     zIndex: 1,
-    // height: '100%',
     backgroundColor: '#FFEDED',
   },
   flatList: {
@@ -125,37 +124,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     zIndex: 1,
   },
-  navContainer: {
-    position: 'absolute',
-    alignItems: 'center',
-    top: 0,
-    height: 73,
-  },
-  navBar: {
-    flexDirection: 'row',
-    backgroundColor: '#FD003C',
-    width: '100%',
-    justifyContent: 'space-evenly',
-  },
-  nav1: {
-    height: 32,
-    width: 21,
-  },
-  nav2: {
-    height: 32,
-    width: 31,
-  },
-  nav3: {
-    height: 35,
-    width: 25,
-  },
-  nav4: {
-    height: 34,
-    width: 34,
-  },
-  iconBehave: {
-    padding: 20,
-  },
   screenText: {
     fontSize: 30,
     color: 'blue',
@@ -175,8 +143,6 @@ const styles = StyleSheet.create({
   topMainImage: {
     width: 245,
     height: 270,
-    // borderWidth: 1,
-    // borderColor: "blue",
   },
   foodTypeText: {
     fontWeight: '600',

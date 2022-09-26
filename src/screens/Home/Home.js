@@ -1,7 +1,6 @@
 import React, {useRef, Fragment} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  Pressable,
   SafeAreaView,
   Text,
   Image,
@@ -11,12 +10,6 @@ import {
 } from 'react-native';
 
 import {setCardItems} from '../../redux/index';
-import {
-  navBarDrink,
-  navBarFood,
-  navBarSpl,
-  navBarFav,
-} from '../../../assests/icons/index';
 
 import {
   starBig,
@@ -33,6 +26,7 @@ import {
 } from '../../../assests/images/index';
 import styles from './styles';
 import BottomButtonGroup from '../../components/bottomButtonGroup';
+import NavContainer from '../../containers/navContainer';
 
 function Home() {
   const dispatch = useDispatch();
@@ -66,7 +60,7 @@ function Home() {
 
   const currentIndex = useRef(0);
   const previousIndex = useRef(0);
-  let data = [
+  const data = [
     {
       name: 'FRIES',
       price: '4$',
@@ -613,23 +607,7 @@ function Home() {
             source={plateBurger}
           />
           <BottomButtonGroup cartData={cartData} />
-          <View style={styles.navContainer}>
-            <View style={styles.navBar}>
-              <Pressable style={styles.iconBehave}>
-                <Image style={styles.nav1} source={navBarFav} />
-              </Pressable>
-
-              <Pressable style={styles.iconBehave}>
-                <Image style={styles.nav2} source={navBarFood} />
-              </Pressable>
-              <Pressable style={styles.iconBehave}>
-                <Image style={styles.nav3} source={navBarDrink} />
-              </Pressable>
-              <Pressable style={styles.iconBehave}>
-                <Image style={styles.nav4} source={navBarSpl} />
-              </Pressable>
-            </View>
-          </View>
+          <NavContainer />
         </View>
       </SafeAreaView>
     </Fragment>
